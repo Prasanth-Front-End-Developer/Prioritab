@@ -1,0 +1,298 @@
+<html lang="en">
+
+<head>
+    <title>Prioritab</title>
+    <link href="prioritab.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/colpick.min.css">
+    <link rel="stylesheet" href="lib/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .main-bgcolor {
+            background-color: #222222;
+        }
+           
+        .main-font-color {
+            color: white;
+        }
+           
+        .main-border-color {
+            color: white;
+        }
+            
+        .shadow-color {
+            color: rgba(255, 255, 255, 0.3);
+        }
+            
+        .shadow-border-color {
+            color: rgba(255, 255, 255, 0.3);
+        }
+            
+        
+        .edit-priorities {
+            display: none;
+            
+        }
+            
+        #nowbox {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #clockbox {
+            font-size: 2em;
+        }
+        #daybox, #datebox {
+            font-size: 1.2em;
+            color: #555;
+        }
+        
+        body {
+            transition: background-color 0.5s;
+        }
+    </style>
+</head>
+
+<body class="main-bgcolor main-font-color">
+    <div id="top-row">
+        <div id="nowbox">
+            <div id="clockbox"></div>
+            <div id="daybox"></div>
+            <div id="datebox"></div>
+        </div>
+        <div id="countdownbox">
+            <div class="countdown-title">We are now through... </div>
+            <div id="countdownbox-justifier">
+                <div id="countdown-day" class="countdown-segment">
+                    <div id="countdown-day-amount" class="countdown-amount">0%</div>
+                    <div class="countdown-label">...of the workday</div>
+                </div>
+                <div id="countdown-month" class="countdown-segment">
+                    <div id="countdown-month-amount" class="countdown-amount">32%</div>
+                    <div class="countdown-label">...of the month</div>
+                </div>
+                <div id="countdown-year" class="countdown-segment">
+                    <div id="countdown-year-amount" class="countdown-amount">85%</div>
+                    <div class="countdown-label">...of the year</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bottom-row">
+        <div id="day-pris" class="priorities">
+            <div class="priorities-title"> Today </div>
+            <div id="list-left" class="list-container">
+                <div class="list-scrollable">
+                    <ul id="shown-items-left" class="shown-items ui-sortable"></ul> <a class="edit-priorities-link shadow-color" href="#" onclick="toggleEditPriorities('edit-priorities-left')">Options</a>
+                    <div class="edit-priorities" id="edit-priorities-left">
+                        <form id="todo-form-left" data-list="left"> <input class="todo main-bgcolor main-font-color" type="text" id="todo-input-left" data-list="left"> <button type="button" class="add-item-button main-font-color" onclick="addItem('shown-items-left', 'todo-input-left')">Add</button> </form> <a href="#" id="sweep-left" class="sweep-link shadow-color" onclick="clearDone('shown-items-left')">Clear Done</a> | <a href="#" id="clear-all-left" class="clear-all-link shadow-color" onclick="clearAll('shown-items-left')">Clear All</a> | <a href="#" class="hide-edit shadow-color" onclick="toggleEditPriorities('edit-priorities-left')">Hide</a>
+                        <div class="edit-message">(You can drag + drop listed priorities)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="week-pris" class="priorities">
+            <div class="priorities-title"> This Week </div>
+            <div id="list-mid" class="list-container">
+                <div class="list-scrollable">
+                    <ul id="shown-items-mid" class="shown-items ui-sortable"></ul> <a class="edit-priorities-link shadow-color" href="#" onclick="toggleEditPriorities('edit-priorities-mid')">Options</a>
+                    <div class="edit-priorities" id="edit-priorities-mid">
+                        <form id="todo-form-mid" data-list="mid"> <input class="todo main-bgcolor main-font-color" type="text" id="todo-input-mid" data-list="mid"> <button type="button" class="add-item-button main-font-color" onclick="addItem('shown-items-mid', 'todo-input-mid')">Add</button> </form> <a href="#" id="sweep-mid" class="sweep-link shadow-color" onclick="clearDone('shown-items-mid')">Clear Done</a> | <a href="#" id="clear-all-mid" class="clear-all-link shadow-color" onclick="clearAll('shown-items-mid')">Clear All</a> | <a href="#" class="hide-edit shadow-color" onclick="toggleEditPriorities('edit-priorities-mid')">Hide</a>
+                        <div class="edit-message">(You can drag + drop listed priorities)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="month-pris" class="priorities">
+            <div class="priorities-title"> This Month </div>
+            <div id="list-right" class="list-container">
+                <div class="list-scrollable">
+                    <ul id="shown-items-right" class="shown-items ui-sortable"></ul> <a class="edit-priorities-link shadow-color" href="#" onclick="toggleEditPriorities('edit-priorities-right')">Options</a>
+                    <div class="edit-priorities" id="edit-priorities-right">
+                        <form id="todo-form-right" data-list="right"> <input class="todo main-bgcolor main-font-color" type="text" id="todo-input-right" data-list="right"> <button type="button" class="add-item-button main-font-color" onclick="addItem('shown-items-right', 'todo-input-right')">Add</button> </form> <a href="#" id="sweep-right" class="sweep-link shadow-color" onclick="clearDone('shown-items-right')">Clear Done</a> | <a href="#" id="clear-all-right" class="clear-all-link shadow-color" onclick="clearAll('shown-items-right')">Clear All</a> | <a href="#" class="hide-edit shadow-color" onclick="toggleEditPriorities('edit-priorities-right')">Hide</a>
+                        <div class="edit-message">(You can drag + drop listed priorities)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="customize-corner">
+            <div id="customize-selectors" class="main-bgcolor" style="display: none;">
+                <h1 id="customize-corner-title">Customization</h1>
+                <h2>Colors:</h2> <button id="background-color-selector" class="color-selector-label cursor-pointer">Background <i class="fa fa-chevron-right" aria-hidden="true"></i></button> <br> <button id="font-color-selector" class="color-selector-label cursor-pointer">Font <i class="fa fa-chevron-right" aria-hidden="true"></i></button> <br> <button id="shadow-color-selector" class="color-selector-label cursor-pointer">Secondary Font <i class="fa fa-chevron-right" aria-hidden="true"></i></button> <br> <br> <button id="restore-default-colors" class="cursor-pointer">Restore default colors</button> <br> <br> <button id="save-button" class="cursor-pointer">Save</button>
+                <h2>Workday:</h2> <input type="checkbox" name="workday-on" class="immune" id="workday-checkbox">Make day timer based on my workday: <br> <span>Workday start: </span> <input type="time" name="workday-start" id="workday-start-timeinput" value="09:00" class="time-input"> <span> - Workday end: </span> <input type="time" name="workday-end" id="workday-end-timeinput" value="18:00" class="time-input"> <button id="workday-time-save">Save</button> <br> <br>
+                <h2>Date and Time format:</h2> <span>Date format: </span> <select name="date-format-input" id="date-format-input">
+                    <optgroup label="American">
+                        <option>MM/DD/YYYY</option>
+                        <option>MMM D, YYYY</option>
+                        <option>MMMM D, YYYY</option>
+                    </optgroup>
+                    <optgroup label="International">
+                        <option>DD/MM/YYYY</option>
+                        <option>D MMM YYYY</option>
+                        <option>D MMMM YYYY</option>
+                    </optgroup>
+                    <optgroup label="ISO 8601">
+                        <option>YYYY-MM-DD</option>
+                    </optgroup>
+                </select> <span>Time format: </span> <select name="time-format-input" id="time-format-input">
+                    <optgroup label="12 hour">
+                        <option>h:mm A</option>
+                        <option>h:mm:ss A</option>
+                    </optgroup>
+                    <optgroup label="24 hour">
+                        <option>HH:mm</option>
+                        <option>HH:mm:ss</option>
+                    </optgroup>
+                </select> <button id="date-time-format-save">Save</button> <br> <br> Remove: <button id="uninstall-extension-button">Uninstall Prioritab</button> <br> <br> <button id="hide-customize-selectors" class="cursor-pointer" onclick="hideCustomization()">Hide</button>
+            </div>
+        </div> <i id="customize-button" class="bi bi-gear" title="Customization" style="cursor: pointer;"></i>
+        <script src="lib/jquery.min.js"></script>
+        <script src="lib/jquery-ui.min.js"></script>
+        <script src="lib/jquery.inlineedit-prioritab.js"></script>
+        <script src="lib/moment.min.js"></script>
+        <script src="lib/pubsub.min.js"></script>
+        <script src="lib/sortaeditalist.js"></script>
+        <script src="lib/colpick.min.js"></script>
+        <script src="prioritab.min.js"></script>
+        <script>
+            function toggleEditPriorities(sectionId) {
+                var editPriorities = document.querySelector('#' + sectionId);
+                editPriorities.style.display = (editPriorities.style.display === 'none' || editPriorities.style.display === '') ? 'block' : 'none';
+            }
+            
+            function addItem(listId, inputId) {
+                var inputElement = document.getElementById(inputId);
+                var inputValue = inputElement.value.trim();
+            
+                if (inputValue !== "") {
+                    var list = document.getElementById(listId);
+                    var listItem = document.createElement("li");
+                    listItem.appendChild(document.createTextNode(inputValue));
+                    list.appendChild(listItem);
+                    inputElement.value = "";
+                }
+            }
+            
+            function clearDone(listId) {
+                var list = document.getElementById(listId);
+                var doneItems = list.querySelectorAll('li.done');
+                doneItems.forEach(function (item) {
+                    list.removeChild(item);
+                });
+            }
+            
+            function clearAll(listId) {
+                var list = document.getElementById(listId);
+                list.innerHTML = '';
+            }
+            
+            function hideCustomization() {
+                document.getElementById("customize-selectors").style.display = "none";
+            }
+            
+            document.getElementById("customize-button").addEventListener("click", function () {
+                document.getElementById("customize-selectors").style.display = "block";
+            });
+            
+            //time
+            function updateClock() {
+                    var now = new Date();
+                    var hours = now.getHours();
+                    var minutes = now.getMinutes();
+                    var seconds = now.getSeconds();
+                    var day = now.toLocaleString('en-US', { weekday: 'long' });
+                    var date = now.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            
+                    var timeString = hours % 12 + ':' + (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds + ' ' + (hours >= 12 ? 'PM' : 'AM');
+            
+                    document.getElementById('clockbox').textContent = timeString;
+                    document.getElementById('daybox').textContent = day;
+                    document.getElementById('datebox').textContent = date;
+                }
+            
+                setInterval(updateClock, 1000);
+                updateClock(); 
+            
+             
+            
+            document.addEventListener("DOMContentLoaded", function () {
+                    document.getElementById("date-time-format-save").addEventListener("click", function () {
+                        var selectedDateFormat = document.getElementById("date-format-input").value;
+                        var selectedTimeFormat = document.getElementById("time-format-input").value;
+                        updateDateTimeFormats(selectedDateFormat, selectedTimeFormat);
+                    });
+            
+                    function updateDateTimeFormats(dateFormat, timeFormat) {
+                        var nowBox = document.getElementById("nowbox");
+                        nowBox.innerHTML = "";
+            
+                        var dateBox = document.createElement("div");
+                        dateBox.textContent = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+                        nowBox.appendChild(dateBox);
+            
+                        var timeBox = document.createElement("div");
+                        timeBox.textContent = new Date().toLocaleTimeString(undefined, { hour12: (timeFormat.includes("A")), hour: 'numeric', minute: 'numeric', second: (timeFormat.includes("ss")) ? 'numeric' : undefined });
+                        nowBox.appendChild(timeBox);
+                    }
+                });
+            
+            
+                
+            
+                document.getElementById('workday-time-save').addEventListener('click', function () {
+                calculatePercentage();
+            });
+            
+            function calculatePercentage() {
+                var startTime = document.getElementById('workday-start-timeinput').value;
+                var endTime = document.getElementById('workday-end-timeinput').value;
+            
+                var startDate = new Date('2000-01-01T' + startTime + ':00');
+                var endDate = new Date('2000-01-01T' + endTime + ':00');
+            
+                var workdayDuration = endDate - startDate;
+            
+                var currentDate = new Date();
+                var elapsedTime = currentDate - startDate;
+                var percentage = (elapsedTime / workdayDuration) * 100;
+            
+                document.getElementById('countdown-day-amount').textContent = percentage.toFixed(0) + "%";
+            }     
+            
+            
+            
+            document.addEventListener('DOMContentLoaded', function () {
+            const backgroundColorSelector = document.getElementById('background-color-selector');
+            const fontColorSelector = document.getElementById('font-color-selector');
+            const shadowColorSelector = document.getElementById('shadow-color-selector');
+            const restoreDefaultColors = document.getElementById('restore-default-colors');
+            const saveButton = document.getElementById('save-button');
+            
+                
+            backgroundColorSelector.addEventListener('click', function () {
+                document.body.style.backgroundColor = 'lightblue'; 
+            });
+            
+            fontColorSelector.addEventListener('click', function () {
+                document.body.style.color = 'darkgreen'; 
+            });
+            
+            shadowColorSelector.addEventListener('click', function () {
+               
+            });
+            
+            
+            restoreDefaultColors.addEventListener('click', function () {
+                document.body.style.backgroundColor = ''; 
+                document.body.style.color = ''; 
+            });
+            
+                       
+            saveButton.addEventListener('click', function () {
+                
+            });
+                    });
+        </script>
+        </script>
+</body>
+
+</html>
